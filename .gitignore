@@ -1,0 +1,16 @@
+# Directories
+/build/
+/vendor/
+.serverless/
+node_modules/
+
+# Files
+.DS_Store
+package-lock.json
+TODO
+
+# Patterns
+.*.sw[op]
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

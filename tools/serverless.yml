@@ -1,0 +1,18 @@
+frameworkVersion: "=1.28.0"
+plugins:
+  - serverless-finch
+
+service: strongbox
+custom:
+  client:
+    bucketName: ${file(../terraform/terraform.tfvars.json):media}
+    distributionFolder: ../webui/build 
+    indexDocument: index.html
+    errorDocument: index.html
+
+provider:
+  name: aws
+  profile: ${file(../terraform/terraform.tfvars.json):aws_profile}
+  region: ${file(../terraform/terraform.tfvars.json):aws_region}
+  runtime: go1.x
+  stage: dev
