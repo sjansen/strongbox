@@ -5,6 +5,8 @@ A serverless, single page app example using:
    - Certificate Manager, CloudFront, Cognito, Route53, S3
  - React
    - create-react-app, Material UI, Redux
+ - SAML
+   - OneLogin
  - Serverless
  - Terraform
 

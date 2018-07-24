@@ -29,19 +29,23 @@ pushd terraform && terraform apply ; popd
 NOTE: CloudFront distribution creation may fail on the first attempt. If this
 happens, repeat the step.
 
-**3.** Install development tool dependenciess:
+**3.** Use the Terraform output to configure your SAML Identity Provider:
+
+ - [OneLogin](onelogin.md)
+
+**4.** Install development tool dependenciess:
 
 ```bash
 pushd tools && yarn ; popd
 ```
 
-**4.** Install the React app dependencies:
+**5.** Install the React app dependencies:
 
 ```bash
 pushd webui && yarn ; popd
 ```
 
-**5.** Build and deploy the React app:
+**6.** Build and deploy the React app:
 
 ```bash
 make deploy-webui
