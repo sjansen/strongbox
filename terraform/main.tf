@@ -61,3 +61,7 @@ variable "protect_logs" {
 variable "protect_media" {
   default = false
 }
+
+variable "user_pool" {
+  type = "string"
+}

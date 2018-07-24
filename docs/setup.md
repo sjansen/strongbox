@@ -15,7 +15,8 @@ values appropriate for your AWS account:
   "logs": "strongbox-logs",
   "media": "strongbox-media",
   "protect_logs": false,
-  "protect_media": false
+  "protect_media": false,
+  "user_pool": "strongbox-dev"
 }
 ```
 
