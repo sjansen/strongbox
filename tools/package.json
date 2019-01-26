@@ -1,9 +1,0 @@
-{
-  "name": "strongbox-tools",
-  "private": true,
-  "devDependencies": {
-    "prettier": "1.13.7",
-    "serverless": "1.28.0",
-    "serverless-finch": "^2.2.0"
-  }
-}

@@ -1,10 +1,10 @@
 # Directories
-/build/
-/vendor/
-.serverless/
+/dist/
 node_modules/
 
 # Files
+/strongbox
+/strongbox.zip
 .DS_Store
 package-lock.json
 TODO

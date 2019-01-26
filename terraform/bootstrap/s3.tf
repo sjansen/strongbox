@@ -1,3 +1,6 @@
+data "aws_elb_service_account" "main" {}
+
+
 resource "aws_s3_bucket" "logs" {
   bucket        = "${var.logs}"
   acl           = "log-delivery-write"
@@ -13,6 +16,26 @@ resource "aws_s3_bucket" "logs" {
       days = 30
     }
   }
+  policy = <<POLICY
+{
+  "Id": "Policy",
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "s3:PutObject"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::${var.logs}/AWSLogs/*",
+      "Principal": {
+        "AWS": [
+          "${data.aws_elb_service_account.main.arn}"
+        ]
+      }
+    }
+  ]
+}
+POLICY
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
@@ -51,10 +74,4 @@ resource "aws_s3_bucket" "media" {
   versioning {
     enabled = "${var.protect_media}"
   }
-}
-
-
-resource "aws_s3_bucket_policy" "media" {
-  bucket = "${aws_s3_bucket.media.id}"
-  policy = "${data.aws_iam_policy_document.media.json}"
 }
