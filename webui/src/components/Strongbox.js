@@ -1,8 +1,13 @@
 import React from 'react';
 
 import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+//import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+//import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 
 import imgLocked from '../images/locked.svg';
@@ -12,10 +17,13 @@ const styles = theme => ({
   container: {
     flexGrow: 1,
   },
-  paper: {
+  card: {
     padding: theme.spacing.unit * 2,
-    height: 200,
+    height: 250,
     width: 200,
+  },
+  media: {
+    height: 200,
   },
   button: {
     margin: theme.spacing.unit,
@@ -23,14 +31,6 @@ const styles = theme => ({
 });
 
 const Strongbox = ({classes, locked, toggleLock}) => {
-  const action = locked ? 'Unlock' : 'Lock';
-  const image = locked ? (
-    <img src={imgLocked} alt="locked" />
-  ) : (
-    <img src={imgUnlocked} alt="unlocked" />
-  );
-  const onClick = () => toggleLock(!locked);
-
   return (
     <Grid
       container
@@ -41,16 +41,26 @@ const Strongbox = ({classes, locked, toggleLock}) => {
       spacing={0}
     >
       <Grid item>
-        <Paper className={classes.paper}>{image}</Paper>
+        <Card className={classes.card}>
+          <CardMedia
+            className={classes.media}
+            component="img"
+            image={locked ? imgLocked : imgUnlocked}
+            title={locked ? "locked" : "unlocked"}
+          />
+          <CardContent>
+            <Typography>{locked ? "" : "This Space For Rent"}</Typography>
+          </CardContent>
+        </Card>
       </Grid>
       <Grid item>
         <Button
           variant="contained"
           color="primary"
           className={classes.button}
-          onClick={onClick}
+          onClick={() => toggleLock(!locked)}
         >
-          {action}
+          {locked ? 'Unlock' : 'Lock'}
         </Button>
       </Grid>
     </Grid>
