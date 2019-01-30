@@ -25,6 +25,26 @@ variable "aws_region" {
 # Resources
 ##
 
+variable "callback_urls" {
+  default = ["http://localhost:3000/login"]
+}
+
+variable "idp_client_id" {
+  default = ""
+}
+
+variable "idp_client_secret" {
+  default = ""
+}
+
+variable "idp_name" {
+  type = "string"
+}
+
+variable "idp_oidc_issuer" {
+  default = ""
+}
+
 variable "logs" {
   type = "string"
 }
