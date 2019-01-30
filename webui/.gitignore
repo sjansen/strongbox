@@ -3,6 +3,7 @@
 /build/
 
 # Files
+/.env*.local
 
 # Patterns
 

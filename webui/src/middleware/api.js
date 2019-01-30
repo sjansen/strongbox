@@ -19,7 +19,6 @@ const apiMiddleware = ({dispatch}) => next => action => {
   } = action.payload;
   const dataOrParams = ['GET', 'DELETE'].includes(method) ? 'params' : 'data';
 
-  axios.defaults.baseURL = process.env.REACT_APP_BASE_URL || '';
   axios.defaults.headers.common['Content-Type'] = 'application/json';
   if (accessToken) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
