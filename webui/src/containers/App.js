@@ -5,7 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 
-import StrongboxContainer from '../containers/StrongboxContainer';
+import StrongboxContainer from './StrongboxContainer';
 
 const styles = theme => ({
   root: {
