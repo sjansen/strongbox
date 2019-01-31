@@ -13,14 +13,12 @@ import imgLocked from '../images/locked.svg';
 import imgUnlocked from '../images/unlocked.svg';
 
 const styles = theme => ({
-  container: {
-    flexGrow: 1,
-  },
   card: {
     padding: theme.spacing.unit * 2,
     height: 250,
     width: 200,
   },
+  grid: {},
   media: {
     height: 200,
   },
@@ -31,14 +29,7 @@ const styles = theme => ({
 
 const Strongbox = ({classes, locked, quote, toggleLock}) => {
   return (
-    <Grid
-      container
-      className={classes.container}
-      direction="column"
-      alignItems="center"
-      justify="center"
-      spacing={0}
-    >
+    <>
       <Grid item>
         <Card className={classes.card}>
           <CardMedia
@@ -69,7 +60,7 @@ const Strongbox = ({classes, locked, quote, toggleLock}) => {
           {locked ? 'Unlock' : 'Lock'}
         </Button>
       </Grid>
-    </Grid>
+    </>
   );
 };
 
