@@ -1,3 +1,28 @@
+data "archive_file" "edge" {
+  type = "zip"
+  output_path = "../../dist/edge.zip"
+  source {
+    filename = "index.js"
+    content = "${file("../../edge/rewrite.js")}"
+  }
+}
+
+
+resource "aws_lambda_function" "edge" {
+  provider = "aws.cloudfront"
+
+  function_name = "${var.fn}-rewrite"
+  filename = "${data.archive_file.edge.output_path}"
+  source_code_hash = "${data.archive_file.edge.output_base64sha256}"
+  role = "${aws_iam_role.edge.arn}"
+  runtime = "nodejs8.10"
+  handler = "index.handler"
+  memory_size = 128
+  timeout = 3
+  publish = true
+}
+
+
 resource "aws_lambda_function" "fn" {
   function_name    = "${var.fn}"
   filename         = "../../strongbox.zip"

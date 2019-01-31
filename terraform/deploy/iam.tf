@@ -1,3 +1,17 @@
+data "aws_iam_policy_document" "edge" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    principals {
+      type = "Service"
+      identifiers = [
+        "lambda.amazonaws.com",
+        "edgelambda.amazonaws.com"
+      ]
+    }
+  }
+}
+
+
 data "aws_iam_policy_document" "media" {
   statement {
     actions   = ["s3:GetObject"]
@@ -32,6 +46,12 @@ EOF
 }
 
 
+resource "aws_iam_role" "edge" {
+  name_prefix = "${var.fn}-edge"
+  assume_role_policy = "${data.aws_iam_policy_document.edge.json}"
+}
+
+
 resource "aws_iam_role" "fn" {
   name = "${var.fn}"
 
@@ -49,6 +69,12 @@ resource "aws_iam_role" "fn" {
   ]
 }
 EOF
+}
+
+
+resource "aws_iam_role_policy_attachment" "edge" {
+  role = "${aws_iam_role.edge.name}"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
 

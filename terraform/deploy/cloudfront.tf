@@ -63,6 +63,11 @@ resource "aws_cloudfront_distribution" "cdn" {
         forward = "none"
       }
     }
+
+    lambda_function_association {
+      event_type = "origin-request"
+      lambda_arn = "${aws_lambda_function.edge.qualified_arn}"
+    }
   }
 
   logging_config = {
