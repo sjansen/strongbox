@@ -1,20 +1,15 @@
 import React from 'react';
-import {Link as RouterLink} from 'react-router-dom';
 
-import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 
+import {UserProvider} from '../contexts/user';
+
 import Routes from './Routes';
+import TopNav from './TopNav';
 
 const styles = theme => ({
-  appbar: {
-    alignSelf: 'flex-start',
-  },
-  container: {
+  grow: {
     flexGrow: 1,
   },
   root: {
@@ -25,29 +20,24 @@ const styles = theme => ({
   },
 });
 
-const App = ({classes, locked = true}) => {
+const App = ({authData, authState, classes, locked = true}) => {
+  const isSignedIn = authState === 'signedIn';
   return (
-    <div className={classes.root}>
-      <AppBar className={classes.appbar} position="static">
-        <Toolbar>
-          <Typography variant="title" color="inherit" className={classes.flex}>
-            <Link component={RouterLink} color="inherit" to="/">
-              Strongbox
-            </Link>
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Grid
-        container
-        className={classes.container}
-        direction="column"
-        alignItems="center"
-        justify="center"
-        spacing={0}
-      >
-        <Routes />
-      </Grid>
-    </div>
+    <UserProvider value={{isSignedIn}}>
+      <div className={classes.root}>
+        <TopNav />
+        <Grid
+          container
+          className={classes.grow}
+          direction="column"
+          alignItems="center"
+          justify="center"
+          spacing={0}
+        >
+          <Routes />
+        </Grid>
+      </div>
+    </UserProvider>
   );
 };
 

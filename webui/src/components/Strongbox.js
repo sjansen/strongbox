@@ -27,7 +27,7 @@ const styles = theme => ({
   },
 });
 
-const Strongbox = ({classes, locked, quote, toggleLock}) => {
+const Strongbox = ({classes, locked, quote, showButton, toggleLock}) => {
   return (
     <>
       <Grid item>
@@ -51,14 +51,18 @@ const Strongbox = ({classes, locked, quote, toggleLock}) => {
         </Card>
       </Grid>
       <Grid item>
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.button}
-          onClick={() => toggleLock(!locked)}
-        >
-          {locked ? 'Unlock' : 'Lock'}
-        </Button>
+        {showButton ? (
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            onClick={() => toggleLock(!locked)}
+          >
+            {locked ? 'Unlock' : 'Lock'}
+          </Button>
+        ) : (
+          ''
+        )}
       </Grid>
     </>
   );

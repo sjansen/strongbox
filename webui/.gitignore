@@ -4,6 +4,7 @@
 
 # Files
 /.env*.local
+/src/config.js
 
 # Patterns
 
