@@ -1,5 +1,5 @@
 locals {
-  cognito_region = "${element(split("_", aws_cognito_user_pool.pool.id), 0)}"
+  cognito_region = "${element(split("_", aws_cognito_user_pool.users.id), 0)}"
 }
 
 
@@ -8,7 +8,7 @@ resource "aws_cognito_identity_provider" "idp" {
 
   provider_name = "${var.idp_name}"
   provider_type = "OIDC"
-  user_pool_id  = "${aws_cognito_user_pool.pool.id}"
+  user_pool_id  = "${aws_cognito_user_pool.users.id}"
   attribute_mapping = {
     email = "email"
     family_name = "family_name"
@@ -26,7 +26,7 @@ resource "aws_cognito_identity_provider" "idp" {
 }
 
 
-resource "aws_cognito_user_pool" "pool" {
+resource "aws_cognito_user_pool" "users" {
   name = "${var.user_pool}"
   username_attributes = ["email"]
 
@@ -89,21 +89,21 @@ resource "aws_cognito_user_pool" "pool" {
 
 
 resource "aws_cognito_user_pool_client" "client" {
-  count = "${length("${aws_cognito_identity_provider.idp.*.provider_name}") > 0 ? 1 : 0}"
+  count = "${length("${var.idp_name}") > 0 ? 1 : 0}"
 
   name                         = "strongbox"
   allowed_oauth_flows          = ["code", "implicit"]
   allowed_oauth_flows_user_pool_client = true
-  allowed_oauth_scopes         = ["email", "openid", "profile"]
+  allowed_oauth_scopes         = ["email", "openid", "profile", "aws.cognito.signin.user.admin"]
   callback_urls                = "${sort(var.callback_urls)}"
   explicit_auth_flows          = ["ADMIN_NO_SRP_AUTH"]
   generate_secret              = false
   supported_identity_providers = ["${aws_cognito_identity_provider.idp.*.provider_name}"]
-  user_pool_id                 = "${aws_cognito_user_pool.pool.id}"
+  user_pool_id                 = "${aws_cognito_user_pool.users.id}"
 }
 
 
 resource "aws_cognito_user_pool_domain" "domain" {
   domain       = "${var.user_pool}"
-  user_pool_id = "${aws_cognito_user_pool.pool.id}"
+  user_pool_id = "${aws_cognito_user_pool.users.id}"
 }

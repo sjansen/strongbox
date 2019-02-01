@@ -4,6 +4,14 @@ locals {
   cognito_idp_initiated_url = "https://${local.cognito_host}/oauth2/authorize?response_type=code&client_id=${local.cognito_client_id}&redirect_uri=${var.callback_urls[0]}"
 }
 
+output "Cognito Client ID" {
+  value = "${local.cognito_client_id}"
+}
+
+output "Cognito User Pool ID" {
+  value = "${aws_cognito_user_pool.users.id}"
+}
+
 output "IDP Initiated URL" {
   value = "${length(var.idp_client_id) < 1 ? "PENDING" : "${local.cognito_idp_initiated_url}"}"
 }
