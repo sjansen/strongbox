@@ -1,7 +1,5 @@
-import React from "react";
+import React from 'react';
 
 import StrongboxContainer from './StrongboxContainer';
 
-
-export default () =>
-    <StrongboxContainer />
+export default () => <StrongboxContainer />;

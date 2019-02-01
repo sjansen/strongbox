@@ -15,7 +15,6 @@ const quote = (state = {}, action) => {
     case SET_QUOTE:
       return {...state, loading: false, text: action.quote};
     case TOGGLE_LOCK:
-      console.log(`toggle lock: ${action}`);
       if (action.locked) {
         const {text, ...withoutQuote} = state;
         return withoutQuote;

@@ -4,7 +4,9 @@ export function getQuote() {
   return apiAction({
     url: '/api/quote/',
     onSuccess: setQuote,
-    onFailure: console.log('Error loading quote'),
+    onFailure: () => {
+      console.log('Error loading quote');
+    },
     label: GET_QUOTE,
   });
 }

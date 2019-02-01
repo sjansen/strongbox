@@ -1,13 +1,14 @@
 import React from 'react';
+import {Link as RouterLink} from 'react-router-dom';
 
 import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 
-import Routes from "./Routes";
-
+import Routes from './Routes';
 
 const styles = theme => ({
   appbar: {
@@ -30,11 +31,14 @@ const App = ({classes, locked = true}) => {
       <AppBar className={classes.appbar} position="static">
         <Toolbar>
           <Typography variant="title" color="inherit" className={classes.flex}>
-            Strongbox
+            <Link component={RouterLink} color="inherit" to="/">
+              Strongbox
+            </Link>
           </Typography>
         </Toolbar>
       </AppBar>
-      <Grid container
+      <Grid
+        container
         className={classes.container}
         direction="column"
         alignItems="center"
