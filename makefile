@@ -1,4 +1,4 @@
-.PHONY:  default  refresh  test  test-coverage  test-docker
+.PHONY:  default  deploy  deploy-webui  refresh  test  test-coverage  test-docker
 
 default: test
 
@@ -10,10 +10,11 @@ deploy:
 	zip -9 strongbox.zip strongbox
 	cd terraform/deploy/ && terraform apply -auto-approve
 
+deploy-webui:
+	scripts/deploy-webui
+
 destroy:
 	cd terraform/deploy/ && terraform destroy
 
 test:
 	cd webui && yarn test -- --coverage
-
-.PHONY: all  deploy-webui  test

@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+pushd terraform/deploy/
+MEDIA_NAME=$(terraform output media_bucket)
+popd
+
+pushd webui
+yarn build
+popd
+
+aws --profile buscaluz s3 sync webui/build/ s3://${MEDIA_NAME}/
+
+#aws cloudfront create-invalidation \
+#  --paths "/*" \
+#  --distribution-id $CLOUDFRONT_ID
