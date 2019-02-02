@@ -40,7 +40,6 @@ class App extends React.Component {
       oauth.responseType +
       '&client_id=' +
       userPoolWebClientId;
-    console.log(url, oauth, userPoolWebClientId);
     window.location.assign(url);
   }
 

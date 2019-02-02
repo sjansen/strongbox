@@ -88,6 +88,7 @@ resource "aws_cloudfront_distribution" "cdn" {
     viewer_protocol_policy = "https-only"
 
     forwarded_values {
+      headers      = ["Authorization"]
       query_string = true
       cookies {
         forward = "all"

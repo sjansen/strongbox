@@ -26,7 +26,7 @@ var quotes = []string{
 var r = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 func handler(req events.APIGatewayProxyRequest) (resp events.APIGatewayProxyResponse, err error) {
-	fmt.Printf("x-amzn-trace-id=%q.\n", req.Headers["x-amzn-trace-id"])
+	fmt.Printf("Authorizer %#v\n", req.RequestContext.Authorizer)
 
 	body, err := json.Marshal(map[string]string{
 		"quote": quotes[rand.Intn(len(quotes))],

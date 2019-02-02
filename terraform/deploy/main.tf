@@ -81,6 +81,10 @@ variable "use_alb" {
   default = true
 }
 
+variable "user_pool" {
+  type = "string"
+}
+
 variable "vpc_id" {
   type = "string"
 }

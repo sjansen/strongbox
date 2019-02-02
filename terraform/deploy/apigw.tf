@@ -8,6 +8,16 @@ resource "aws_api_gateway_rest_api" "gw" {
 }
 
 
+resource "aws_api_gateway_authorizer" "auth" {
+  count = "${var.use_alb ? 0 : 1}"
+
+  name          = "${var.lb}"
+  type          = "COGNITO_USER_POOLS"
+  rest_api_id   = "${join("", aws_api_gateway_rest_api.gw.*.id)}"
+  provider_arns = ["${data.aws_cognito_user_pools.users.arns}"]
+}
+
+
 resource "aws_api_gateway_deployment" "default" {
   count = "${var.use_alb ? 0 : 1}"
 
@@ -24,20 +34,22 @@ resource "aws_api_gateway_deployment" "default" {
 resource "aws_api_gateway_method" "proxy" {
   count = "${var.use_alb ? 0 : 1}"
 
+  authorization = "COGNITO_USER_POOLS"
+  authorizer_id = "${aws_api_gateway_authorizer.auth.id}"
   rest_api_id   = "${join("", aws_api_gateway_rest_api.gw.*.id)}"
   resource_id   = "${join("", aws_api_gateway_resource.proxy.*.id)}"
   http_method   = "ANY"
-  authorization = "NONE"
 }
 
 
 resource "aws_api_gateway_method" "proxy_root" {
   count = "${var.use_alb ? 0 : 1}"
 
+  authorization = "COGNITO_USER_POOLS"
+  authorizer_id = "${aws_api_gateway_authorizer.auth.id}"
   rest_api_id = "${join("", aws_api_gateway_rest_api.gw.*.id)}"
   resource_id = "${join("", aws_api_gateway_rest_api.gw.*.root_resource_id)}"
   http_method   = "ANY"
-  authorization = "NONE"
 }
 
 
