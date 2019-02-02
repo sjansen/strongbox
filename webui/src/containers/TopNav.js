@@ -32,8 +32,12 @@ const TopNav = ({classes}) => {
         </Typography>
         <div className={classes.grow} />
         <UserConsumer>
-          {({isSignedIn, signOut}) =>
-            isSignedIn ? <SignOutButton action={signOut} /> : <SignInButton />
+          {({isSignedIn, signIn, signOut}) =>
+            isSignedIn ? (
+              <SignOutButton action={signOut} />
+            ) : (
+              <SignInButton action={signIn} />
+            )
           }
         </UserConsumer>
       </Toolbar>

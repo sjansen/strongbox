@@ -25,7 +25,23 @@ const styles = theme => ({
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.signIn = this.signIn.bind(this);
     this.signOut = this.signOut.bind(this);
+  }
+
+  signIn() {
+    const {oauth, userPoolWebClientId} = Auth.configure();
+    const url =
+      'https://' +
+      oauth.domain +
+      '/oauth2/authorize?redirect_uri=' +
+      oauth.redirectSignIn +
+      '&response_type=' +
+      oauth.responseType +
+      '&client_id=' +
+      userPoolWebClientId;
+    console.log(url, oauth, userPoolWebClientId);
+    window.location.assign(url);
   }
 
   signOut() {
@@ -41,9 +57,10 @@ class App extends React.Component {
   render() {
     const {authState, classes} = this.props;
     const isSignedIn = authState === 'signedIn';
-    console.log('isSignedIn =>', isSignedIn);
     return (
-      <UserProvider value={{isSignedIn, signOut: this.signOut}}>
+      <UserProvider
+        value={{isSignedIn, signIn: this.signIn, signOut: this.signOut}}
+      >
         <div className={classes.root}>
           <TopNav />
           <Grid

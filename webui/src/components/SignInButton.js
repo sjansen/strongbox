@@ -1,6 +1,5 @@
 // @format
 import React from 'react';
-import {withOAuth} from 'aws-amplify-react';
 
 import Button from '@material-ui/core/Button';
 import {withStyles} from '@material-ui/core/styles';
@@ -9,17 +8,17 @@ const styles = theme => ({
   button: {},
 });
 
-const SignInButton = ({classes, OAuthSignIn}) => {
+const SignInButton = ({classes, action}) => {
   return (
     <Button
       className={classes.button}
       color="secondary"
-      onClick={OAuthSignIn}
+      onClick={action}
       variant="contained"
     >
-      Sign In with AWS
+      Sign In
     </Button>
   );
 };
 
-export default withOAuth(withStyles(styles)(SignInButton));
+export default withStyles(styles)(SignInButton);
