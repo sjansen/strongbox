@@ -1,3 +1,4 @@
+// @format
 import {Auth} from 'aws-amplify';
 import React from 'react';
 

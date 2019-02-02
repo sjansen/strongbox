@@ -1,3 +1,4 @@
+// @format
 import {API_BEGIN, API_END, SET_QUOTE, TOGGLE_LOCK} from '../actions/types';
 
 const quote = (state = {}, action) => {

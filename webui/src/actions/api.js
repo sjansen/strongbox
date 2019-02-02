@@ -1,3 +1,4 @@
+// @format
 import {API_BEGIN, API_END, API_ERROR, ACCESS_DENIED} from '../actions/types';
 
 export const apiBegin = label => ({

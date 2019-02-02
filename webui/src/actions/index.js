@@ -1,3 +1,4 @@
+// @format
 import {API, GET_QUOTE, SET_QUOTE, TOGGLE_LOCK} from './types';
 
 export function getQuote() {

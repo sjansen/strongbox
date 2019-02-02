@@ -1,3 +1,4 @@
+// @format
 import {TOGGLE_LOCK} from '../actions/types';
 
 const locked = (state = true, action) => {
