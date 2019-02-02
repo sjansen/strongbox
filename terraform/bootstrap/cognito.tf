@@ -98,6 +98,7 @@ resource "aws_cognito_user_pool_client" "client" {
   callback_urls                = "${sort(var.callback_urls)}"
   explicit_auth_flows          = ["ADMIN_NO_SRP_AUTH"]
   generate_secret              = false
+  logout_urls                  = "${sort(var.logout_urls)}"
   supported_identity_providers = ["${aws_cognito_identity_provider.idp.*.provider_name}"]
   user_pool_id                 = "${aws_cognito_user_pool.users.id}"
 }

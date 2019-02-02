@@ -8,7 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 
 import SignInButton from '../components/SignInButton';
-import {UserConsumer} from '../contexts/user';
+import SignOutButton from '../components/SignOutButton';
+import {UserConsumer} from './UserContext';
 
 const styles = theme => ({
   appbar: {
@@ -30,7 +31,9 @@ const TopNav = ({classes}) => {
         </Typography>
         <div className={classes.grow} />
         <UserConsumer>
-          {({isSignedIn}) => (isSignedIn ? '' : <SignInButton />)}
+          {({isSignedIn, signOut}) =>
+            isSignedIn ? <SignOutButton action={signOut} /> : <SignInButton />
+          }
         </UserConsumer>
       </Toolbar>
     </AppBar>

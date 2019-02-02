@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import {getQuote, toggleLock} from '../actions';
 import Strongbox from '../components/Strongbox';
-import {UserConsumer} from '../contexts/user';
+import {UserConsumer} from './UserContext';
 
 const mapStateToProps = state => ({
   locked: state.locked,

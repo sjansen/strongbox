@@ -26,7 +26,7 @@ variable "aws_region" {
 ##
 
 variable "callback_urls" {
-  default = ["http://localhost:3000/login"]
+  default = ["http://localhost:3000/signin"]
 }
 
 variable "idp_client_id" {
@@ -43,6 +43,10 @@ variable "idp_name" {
 
 variable "idp_oidc_issuer" {
   default = ""
+}
+
+variable "logout_urls" {
+  default = ["http://localhost:3000/signout"]
 }
 
 variable "logs" {
