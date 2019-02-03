@@ -1,14 +1,26 @@
 // @format
 import {Auth} from 'aws-amplify';
 import React from 'react';
+import {connect} from 'react-redux';
 
 import Grid from '@material-ui/core/Grid';
 import {withStyles} from '@material-ui/core/styles';
 
-import {UserProvider} from './UserContext';
+import {setApiToken} from '../actions';
 
 import Routes from './Routes';
 import TopNav from './TopNav';
+import {UserProvider} from './UserContext';
+
+const mapStateToProps = state => ({
+  apiToken: state.auth.token,
+});
+
+const mapDispatchToProps = dispatch => ({
+  setApiToken: token => {
+    dispatch(setApiToken(token));
+  },
+});
 
 const styles = theme => ({
   grow: {
@@ -27,6 +39,17 @@ class App extends React.Component {
     super(props);
     this.signIn = this.signIn.bind(this);
     this.signOut = this.signOut.bind(this);
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    const {apiToken, authData, setApiToken} = nextProps;
+    const newToken =
+      authData && authData.signInUserSession
+        ? authData.signInUserSession.idToken.jwtToken
+        : '';
+    if (apiToken !== newToken) {
+      setApiToken(newToken);
+    }
   }
 
   signIn() {
@@ -78,4 +101,7 @@ class App extends React.Component {
   }
 }
 
-export default withStyles(styles)(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withStyles(styles)(App));

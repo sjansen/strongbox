@@ -3,7 +3,7 @@ import axios from 'axios';
 import {API} from '../actions/types';
 import {accessDenied, apiBegin, apiEnd, apiError} from '../actions/api';
 
-const apiMiddleware = ({dispatch}) => next => action => {
+const apiMiddleware = ({dispatch, getState}) => next => action => {
   next(action);
 
   if (action.type !== API) return;
@@ -20,10 +20,19 @@ const apiMiddleware = ({dispatch}) => next => action => {
   } = action.payload;
   const dataOrParams = ['GET', 'DELETE'].includes(method) ? 'params' : 'data';
 
+  const state = getState();
+  const token = accessToken
+    ? accessToken
+    : state && state.auth
+    ? state.auth.token
+    : null;
+  const combinedHeaders = token
+    ? {
+        Authorization: `Bearer ${token}`,
+        ...headers,
+      }
+    : headers;
   axios.defaults.headers.common['Content-Type'] = 'application/json';
-  if (accessToken) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-  }
 
   if (label) {
     dispatch(apiBegin(label));
@@ -33,7 +42,7 @@ const apiMiddleware = ({dispatch}) => next => action => {
     .request({
       url,
       method,
-      headers,
+      headers: combinedHeaders,
       [dataOrParams]: data,
     })
     .then(({data}) => {
