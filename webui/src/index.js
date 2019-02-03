@@ -22,8 +22,12 @@ Amplify.configure({
     oauth: {
       domain: config.oauth.DOMAIN,
       scope: ['aws.cognito.signin.user.admin', 'email', 'openid', 'profile'],
-      redirectSignIn: config.oauth.SIGNIN,
-      redirectSignOut: config.oauth.SIGNOUT,
+      redirectSignIn: `${window.location.protocol}//${
+        window.location.host
+      }/signin`,
+      redirectSignOut: `${window.location.protocol}//${
+        window.location.host
+      }/signout`,
       responseType: 'code',
     },
   },
