@@ -3,7 +3,7 @@ import {API, GET_QUOTE, SET_QUOTE, TOGGLE_LOCK} from './types';
 
 export function getQuote() {
   return apiAction({
-    url: '/api/quote/',
+    url: '/api/public/quote/',
     onSuccess: setQuote,
     onFailure: () => {
       console.log('Error loading quote');
