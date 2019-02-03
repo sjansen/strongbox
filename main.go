@@ -23,7 +23,9 @@ var quotes = []string{
 	"The world is a vampire.",
 }
 
-var r = rand.New(rand.NewSource(time.Now().UnixNano()))
+func init() {
+	rand.Seed(time.Now().UnixNano())
+}
 
 func handler(req events.APIGatewayProxyRequest) (resp events.APIGatewayProxyResponse, err error) {
 	fmt.Printf("%s %q\n", req.HTTPMethod, req.Path)
