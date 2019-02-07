@@ -1,5 +1,4 @@
 // @format
-import {Auth} from 'aws-amplify';
 import React from 'react';
 import {connect} from 'react-redux';
 
@@ -7,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import {withStyles} from '@material-ui/core/styles';
 
 import {setApiToken} from '../actions';
+import config from '../config';
 
 import Routes from './Routes';
 import TopNav from './TopNav';
@@ -53,27 +53,26 @@ class App extends React.Component {
   }
 
   signIn() {
-    const {oauth, userPoolWebClientId} = Auth.configure();
     const url =
       'https://' +
-      oauth.domain +
-      '/oauth2/authorize?redirect_uri=' +
-      oauth.redirectSignIn +
-      '&response_type=' +
-      oauth.responseType +
-      '&client_id=' +
-      userPoolWebClientId;
+      config.cognito.DOMAIN +
+      '/oauth2/authorize?client_id=' +
+      config.cognito.APP_CLIENT_ID +
+      '&redirect_uri=' +
+      config.cognito.REDIRECT_SIGN_IN +
+      '&response_type=code';
     window.location.assign(url);
   }
 
   signOut() {
-    Auth.signOut()
-      .then(() => {
-        // noop
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    const url =
+      'https://' +
+      config.cognito.DOMAIN +
+      '/logout?client_id=' +
+      config.cognito.APP_CLIENT_ID +
+      '&logout_uri=' +
+      config.cognito.REDIRECT_SIGN_OUT;
+    window.location.assign(url);
   }
 
   render() {
